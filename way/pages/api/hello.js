@@ -1,5 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import usersController from '../../controllers/usersControllers';
 
 export default function handler(req, res) {
-  res.status(200).json({ message: 'Esto es de lean!' })
+  const users = usersController.RecuperarUsuarios();
+  res.status(200).json({ users })
 }
