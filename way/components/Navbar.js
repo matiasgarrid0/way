@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, {useState} from 'react'
 //@mui
 import AppBar from '@mui/material/AppBar';
@@ -14,9 +15,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 //img
+import Image from 'next/image'
 import Logo from '../img/logo.png'
 
-const pages = ['Contacto', 'Pricing', 'Blog'];
+const pages = ['contacto', 'cursos', 'nosotros'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
@@ -42,7 +44,7 @@ const Navbar = () => {
         <AppBar position="static" style={{background:'#FF2926'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        <img src={Logo} alt='logo' width={'100px'}/>
+        <Image src={Logo} alt='logo' width={100}/>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -87,7 +89,7 @@ const Navbar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link href={`/${page}`}>{page}</Link>
               </Button>
             ))}
           </Box>

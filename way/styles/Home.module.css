@@ -127,3 +127,16 @@
     filter: invert(1);
   }
 }
+
+/*HOME*/
+.bghome{
+  background-image: url(../img/bghome.png);
+  height: 50vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+@media(min-width:990px)  {
+  .bghome{
+    height: 70vh;
+  }
+}
