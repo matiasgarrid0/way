@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, {useState} from 'react'
 //@mui
 import AppBar from '@mui/material/AppBar';
@@ -16,7 +17,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 //img
 import Logo from '../img/logo.png'
 
-const pages = ['Contacto', 'Pricing', 'Blog'];
+const pages = ['contacto', 'cursos', 'nosotros'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
@@ -87,7 +88,7 @@ const Navbar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link href={`/${page}`}>{page}</Link>
               </Button>
             ))}
           </Box>
