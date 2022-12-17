@@ -1,24 +1,38 @@
-// controllers 
-import userControler from '../../controllers/usersControllers';
-import authController from '../../controllers/authController';
+import coursesController from '../../../controllers/coursesController';
 
 export default async function handler(req, res) {
-    const {username, password} = req.body;
+    
+    const {id} = req.query;
+
     switch(req.method){
-        case 'POST':
+        case 'PUT':
             try {
-                console.log('hereeeeeeeeeee');
-                if( !username && !password ){
-                    throw new Error('username and password is required');
-                }
-                console.log(username,password);
-                const passwordEncoded = bcrypt.hashSync(password,proccess.env.PASSWORD_HASH);
-                const user = await userControler.create(username,passwordEncoded); // to do create
-                const token = authController.createToken(user);
-                res.send({token});                
+                const data = req.body;
+                const course = await coursesController.findCourse(id);
+                const courseUpdated = await coursesController.updateCourse(data,id);
+                res.send(courseUpdated);
             } catch (err) {
-                res.send({message: err.message});
+                res.status(404).send({message: err.message});
             }
+            break;
+        case 'GET':
+            try {
+                const course = await coursesController.findCourse(id);
+                res.send(course);                
+            } catch (err) {
+                console.log(err);
+                res.status(404).send({message: err.message})
+            }
+            break;
+        case 'DELETE':
+            try {
+                await coursesController.deleteCourse(id);
+                return `deleted course whit id ${id}`;
+            } catch (err) {
+                console.log(err);
+                res.status(404).send({message: err.message})
+            }
+            break;
     }
     
 }
