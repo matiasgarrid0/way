@@ -1,3 +1,13 @@
+.cardscontainer{
+    text-align: center;
+}
+.cardcontainer{
+    -webkit-box-shadow: 0px 0px 20px -1px rgba(148,148,148,1);
+-moz-box-shadow: 0px 0px 20px -1px rgba(148,148,148,1);
+box-shadow: 0px 0px 20px -1px rgba(148,148,148,1);
+margin: 1rem;
+width: 20rem;
+}
 .title{
     font-size: 2rem;
     margin: 0 auto;
@@ -5,4 +15,9 @@
 .imagecard{
     width: 20rem;
     height: 10rem;
+    margin: 0 auto;
+}
+.carddescription{
+    text-align: start;
+    width: 20rem;
 }
