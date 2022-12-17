@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { TextField } from '@mui/material'
+import { useState } from 'react'
 
 export default function Upload  (props) {
+  const [picture, setPicture] = useState(null);
   
   const onChange = async (e) => {
     const formData = new FormData();
@@ -14,7 +15,7 @@ export default function Upload  (props) {
     };
 
     const response = await axios.post('/api/upload/1', formData);
-
+    setPicture(response.data);
     console.log('response', response.data);
   };
 
