@@ -30,7 +30,16 @@ const userSchema = new Schema(
     quotes: {
         type: Number,
         required: [true,'quotes is required'],
+    },
+    duration:{
+      type:Schema,
+      required:[true,'duration is required']
+    },
+    initialDate:{
+      type: String,
+      required:[true, 'Initial data is required']
     }
+    
     
   },
   {
