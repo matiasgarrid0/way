@@ -44,7 +44,7 @@ const Navbar = () => {
         <AppBar position="static" style={{background:'#FF2926'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-        <Image src={Logo} alt='logo' width={100}/>
+       <Link href='/'> <Image src={Logo} alt='logo' width={100}/></Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
