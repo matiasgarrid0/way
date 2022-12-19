@@ -32,11 +32,11 @@ const userSchema = new Schema(
         required: [true,'quotes is required'],
     },
     duration:{
-      type:Schema,
+      type:String,
       required:[true,'duration is required']
     },
     initialDate:{
-      type: String,
+      type: String, // hay que cambiar a date
       required:[true, 'Initial data is required']
     }
     

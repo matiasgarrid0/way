@@ -45,7 +45,13 @@ const Course = {
             if (!title && description && price && image && quotes && usersIds) {
                 throw new Error('data is required');
             }
-            const course = await courseSchema.create(data);
+            const objet = {
+                ...data,
+                price: parseInt(price),
+                quotes: parseInt(quotes),
+                image: 'hhtsasas',
+            }
+            const course = await courseSchema.create(objet);
             return course;
 
         } catch (err) {

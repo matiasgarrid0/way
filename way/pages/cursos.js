@@ -8,6 +8,8 @@ import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { useForm } from "react-hook-form";
+import axios from 'axios';
 
 const style = {
   position: "absolute",
@@ -28,12 +30,20 @@ const cursos = () => {
   const handleClose = () => setOpen(false);
 
   const [value, setValue] = useState(dayjs("2022-12-18T21:11:54"));
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const handleChange = (newValue) => {
     setValue(newValue);
   };
+  const values = watch();
 
   const createCourse = () => {
     console.log("create");
+  };
+  const onSubmit = data => {
+    console.log(values);
+    axios.post('/api/courses',values)
+    .then((data)=>(console.log(data)))
+    .catch((err)=>(console.log(err)));
   };
   return (
     <div>
@@ -51,32 +61,38 @@ const cursos = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
+           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
               label="Título"
               name="title"
               style={{ width: "100%", marginBottom: "10px" }}
-            />
+              {...register('title')}
+              />
             <TextField
               label="Descripción"
               name="description"
               style={{ width: "100%", marginBottom: "10px" }}
+              {...register('description')}
             />
             <TextField
               label="Precio"
               name="price"
               style={{ width: "100%", marginBottom: "10px" }}
-            />
+              {...register('price')}
+              />
             <TextField
               label="Cupo"
-              name="cuotes"
+              name="quotes"
               style={{ width: "100%", marginBottom: "10px" }}
+              {...register('quotes')}
             />
                         
             <TextField
               label="Duración"
               name="duration"
               style={{ width: "100%", marginBottom: "10px" }}
-            />
+              {...register('duration')}
+              />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <Stack spacing={3}>
                 <DesktopDatePicker
@@ -86,16 +102,19 @@ const cursos = () => {
                   name='initialDate'
                   onChange={handleChange}
                   renderInput={(params) => <TextField {...params} />}
-                />
+                  {...register('initialDate')}
+                  />
               </Stack>
             </LocalizationProvider>
             <Button
               color="success"
               style={{ float: "right", margingTop: "20px" }}
               variant="contained"
-            >
+              type="sumbit"
+              >
               Crear
             </Button>
+              </form> 
           </Box>
         </Modal>
       </div>
