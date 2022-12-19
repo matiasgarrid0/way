@@ -66,8 +66,10 @@ const cursos = () => {
               label="Título"
               name="title"
               style={{ width: "100%", marginBottom: "10px" }}
-              {...register('title')}
+              {...register('title',{ required: true, maxLength: 20 })}
+              aria-invalid={errors.title ? "true" : "false"}
               />
+              {errors.title?.type === 'required' && <p role="alert">title is required</p>}
             <TextField
               label="Descripción"
               name="description"
