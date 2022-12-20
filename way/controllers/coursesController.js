@@ -19,7 +19,7 @@ const Course = {
     },
     async findCourse(id) {
         try {
-            const course = await courseSchema.findById({ id });
+            const course = await courseSchema.findById({ _id: id });
             if (!course) {
                 throw new Error('course not found');
             }
@@ -31,7 +31,7 @@ const Course = {
     },
     async deleteCourse(id) {
         try {
-            await courseSchema.deleteOne({ id });
+            await courseSchema.deleteOne({ _id: id });
         } catch (err) {
             console.log(err);
             return err;
@@ -61,7 +61,7 @@ const Course = {
     },
     async updateCourse(data, id) {
         try {
-            const course = await courseSchema.updateOne({ id }, data);
+            const course = await courseSchema.updateOne({ _id: id }, data);
             return course;
         } catch (err) {
             console.log(err);
