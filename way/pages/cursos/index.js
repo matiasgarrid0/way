@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Navbar";
 import { TextField, Box, Button, Modal } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 //datepicker
@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import styles from '../styles/Cursos.module.css'
+import styles from '../../styles/Cursos.module.css';
 
 const style = {
   position: "absolute",
@@ -59,18 +59,11 @@ const cursos = () => {
   useEffect(() => {
     getCourses();
   }, [search]);
-  const onSubmit = (data) => {
-    axios
-      .post("/api/courses", values)
-      .then((data) => console.log(data),setSearch(!search), handleClose())
-      .catch((err) => console.log(err));
-
-  };
   const onSubmit = data => {
     console.log(values);
     values.initialDate = value;
     axios.post('/api/courses',values)
-    .then((data)=>(console.log(data)))
+    .then((data) => console.log(data),setSearch(!search), handleClose())
     .catch((err)=>(console.log(err)));
   };
   return (
