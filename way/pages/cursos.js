@@ -33,7 +33,6 @@ const schema = yup.object({
   price: yup.number().required().positive(),
   quotes: yup.number().required().positive(),
   duration: yup.string(),
-  initialDate: yup.string().required(),
 }).required();
 
 const cursos = () => {
@@ -66,6 +65,13 @@ const cursos = () => {
       .then((data) => console.log(data),setSearch(!search), handleClose())
       .catch((err) => console.log(err));
 
+  };
+  const onSubmit = data => {
+    console.log(values);
+    values.initialDate = value;
+    axios.post('/api/courses',values)
+    .then((data)=>(console.log(data)))
+    .catch((err)=>(console.log(err)));
   };
   return (
     <div>
@@ -134,34 +140,20 @@ const cursos = () => {
               style={{ width: "100%", marginBottom: "10px" }}
               {...register('duration')}
               />
-              <TextField
-                label="Cupo"
-                name="quotes"
-                style={{ width: "100%", marginBottom: "10px" }}
-                {...register("quotes")}
-              />
-
-              <TextField
-                label="Duración"
-                name="duration"
-                style={{ width: "100%", marginBottom: "10px" }}
-                {...register("duration")}
-              />
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Stack spacing={3}>
-                  <DesktopDatePicker
-                    label="Fecha de inicio"
-                    inputFormat="MM/DD/YYYY"
-                    value={value}
-                    name="initialDate"
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                    {...register("initialDate")}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Stack spacing={3}>
+                <DesktopDatePicker
+                  label="Fecha de inicio"
+                  inputFormat="MM/DD/YYYY"
+                  value={value}
+                  name='initialDate'
+                  onChange={handleChange}
+                  renderInput={(params) => <TextField {...params}/>}
+                  
                   />
               </Stack>
             </LocalizationProvider>
             
-            <p>{errors.initialDate?.message}</p>
             <Button
               color="success"
               style={{ float: "right", margingTop: "20px" }}
