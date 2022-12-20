@@ -32,7 +32,6 @@ const schema = yup.object({
   price: yup.number().required().positive(),
   quotes: yup.number().required().positive(),
   duration: yup.string(),
-  initialDate: yup.string().required(),
 }).required();
 
 const cursos = () => {
@@ -52,6 +51,7 @@ const cursos = () => {
   };
   const onSubmit = data => {
     console.log(values);
+    values.initialDate = value;
     axios.post('/api/courses',values)
     .then((data)=>(console.log(data)))
     .catch((err)=>(console.log(err)));
@@ -118,13 +118,12 @@ const cursos = () => {
                   value={value}
                   name='initialDate'
                   onChange={handleChange}
-                  renderInput={(params) => <TextField {...params} />}
-                  {...register('initialDate')}
+                  renderInput={(params) => <TextField {...params}/>}
+                  
                   />
               </Stack>
             </LocalizationProvider>
             
-            <p>{errors.initialDate?.message}</p>
             <Button
               color="success"
               style={{ float: "right", margingTop: "20px" }}
