@@ -10,6 +10,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 const style = {
   position: "absolute",
@@ -24,13 +26,22 @@ const style = {
   maxHeight:500
 };
 
+const schema = yup.object({
+  title: yup.string().required().min(3).max(500),
+  description: yup.string().required().min(3).max(5000),
+  price: yup.number().required().positive(),
+  quotes: yup.number().required().positive(),
+  duration: yup.string(),
+  initialDate: yup.string().required(),
+}).required();
+
 const cursos = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const [value, setValue] = useState(dayjs("2022-12-18T21:11:54"));
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({resolver: yupResolver(schema)});
   const handleChange = (newValue) => {
     setValue(newValue);
   };
@@ -66,29 +77,33 @@ const cursos = () => {
               label="Título"
               name="title"
               style={{ width: "100%", marginBottom: "10px" }}
-              {...register('title',{ required: true, maxLength: 20 })}
-              aria-invalid={errors.title ? "true" : "false"}
+              {...register('title')}
+              
               />
-              {errors.title?.type === 'required' && <p role="alert">title is required</p>}
+              <p>{errors.title?.message}</p>
             <TextField
               label="Descripción"
               name="description"
               style={{ width: "100%", marginBottom: "10px" }}
               {...register('description')}
             />
+            <p>{errors.description?.message}</p>
             <TextField
               label="Precio"
               name="price"
               style={{ width: "100%", marginBottom: "10px" }}
               {...register('price')}
               />
+              
+              <p>{errors.price?.message}</p>
             <TextField
               label="Cupo"
               name="quotes"
               style={{ width: "100%", marginBottom: "10px" }}
               {...register('quotes')}
             />
-                        
+                   
+              <p>{errors.quotes?.message}</p>     
             <TextField
               label="Duración"
               name="duration"
@@ -108,6 +123,8 @@ const cursos = () => {
                   />
               </Stack>
             </LocalizationProvider>
+            
+            <p>{errors.initialDate?.message}</p>
             <Button
               color="success"
               style={{ float: "right", margingTop: "20px" }}
