@@ -9,9 +9,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useForm } from "react-hook-form";
-//axios
-import axios, { Axios } from "axios";
-//styles
+import axios from 'axios';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 import styles from '../styles/Cursos.module.css'
 
 const style = {
@@ -26,6 +26,15 @@ const style = {
   p: 4,
   maxHeight: 500,
 };
+
+const schema = yup.object({
+  title: yup.string().required().min(3).max(500),
+  description: yup.string().required().min(3).max(5000),
+  price: yup.number().required().positive(),
+  quotes: yup.number().required().positive(),
+  duration: yup.string(),
+  initialDate: yup.string().required(),
+}).required();
 
 const cursos = () => {
   const [open, setOpen] = useState(false);
@@ -87,28 +96,43 @@ const cursos = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <TextField
-                label="Título"
-                name="title"
-                style={{ width: "100%", marginBottom: "10px" }}
-                {...register("title", { required: true, maxLength: 20 })}
-                aria-invalid={errors.title ? "true" : "false"}
+           <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              label="Título"
+              name="title"
+              style={{ width: "100%", marginBottom: "10px" }}
+              {...register('title')}
+              
               />
-              {errors.title?.type === "required" && (
-                <p role="alert">title is required</p>
-              )}
-              <TextField
-                label="Descripción"
-                name="description"
-                style={{ width: "100%", marginBottom: "10px" }}
-                {...register("description")}
+              <p>{errors.title?.message}</p>
+            <TextField
+              label="Descripción"
+              name="description"
+              style={{ width: "100%", marginBottom: "10px" }}
+              {...register('description')}
+            />
+            <p>{errors.description?.message}</p>
+            <TextField
+              label="Precio"
+              name="price"
+              style={{ width: "100%", marginBottom: "10px" }}
+              {...register('price')}
               />
-              <TextField
-                label="Precio"
-                name="price"
-                style={{ width: "100%", marginBottom: "10px" }}
-                {...register("price")}
+              
+              <p>{errors.price?.message}</p>
+            <TextField
+              label="Cupo"
+              name="quotes"
+              style={{ width: "100%", marginBottom: "10px" }}
+              {...register('quotes')}
+            />
+                   
+              <p>{errors.quotes?.message}</p>     
+            <TextField
+              label="Duración"
+              name="duration"
+              style={{ width: "100%", marginBottom: "10px" }}
+              {...register('duration')}
               />
               <TextField
                 label="Cupo"
@@ -134,13 +158,15 @@ const cursos = () => {
                     renderInput={(params) => <TextField {...params} />}
                     {...register("initialDate")}
                   />
-                </Stack>
-              </LocalizationProvider>
-              <Button
-                color="success"
-                style={{ float: "right", margingTop: "20px" }}
-                variant="contained"
-                type="sumbit"
+              </Stack>
+            </LocalizationProvider>
+            
+            <p>{errors.initialDate?.message}</p>
+            <Button
+              color="success"
+              style={{ float: "right", margingTop: "20px" }}
+              variant="contained"
+              type="sumbit"
               >
                 Crear
               </Button>
