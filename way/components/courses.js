@@ -1,52 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/Courses.module.css";
-import Image from 'next/image'
+import { Button } from "@mui/material";
+import Image from "next/image";
 //slider
-import Img from '../img/layoutbg.jpg'
-
+import bgimg from "../img/layoutbg.jpg";
+//axios
+import axios from "axios";
 const Courses = () => {
-  
-  const courses = [
-    {
-      title: "Curso acelerado para adultos",
-      description:
-        "En este curso aprenderas sobre todo lo necesario para hablar inglés de una manera fluida y ganaras confianza a la hora de hablar el idioma",
-      price: 25,
-      image: Img,
-      quotes: 10,
-    },
-    {
-      title: "Curso acelerado para adultos",
-      description:
-        "En este curso aprenderas sobre todo lo necesario para hablar inglés de una manera fluida y ganaras confianza a la hora de hablar el idioma",
-      price: 25,
-      image: Img,
-      quotes: 10,
-    },
-    {
-      title: "Curso acelerado para adultos",
-      description:
-        "En este curso aprenderas sobre todo lo necesario para hablar inglés de una manera fluida y ganaras confianza a la hora de hablar el idioma",
-      price: 25,
-      image: Img,
-      quotes: 10,
-    },
-    {
-        title: "Curso acelerado para adultos",
-        description:
-          "En este curso aprenderas sobre todo lo necesario para hablar inglés de una manera fluida y ganaras confianza a la hora de hablar el idioma",
-        price: 25,
-        image: Img,
-        quotes: 10,
-      },
-  ];
+  const [courses, setCourses] = useState([]);
+  const [search, setSearch] = useState(false);
+
+  const getCourses = async () => {
+    const { data } = await axios.get("api/courses");
+    setCourses(data);
+  };
+
+  useEffect(() => {
+    getCourses();
+  }, [search]);
+
   return (
-    <div>
-      <p className={styles.title}>Cursos</p>
-      <div className={styles.cardscontainer}>
-      {courses.map(e=>(
-        <p>{e.title}</p>
-      ))}
+    <div className={styles.coursesAlign}>
+      <p className={styles.title}>Conocé nuestra oferta educativa</p>
+
+      <div className={styles.coursesContainer}>
+        {courses ? (
+          courses?.map((c) => (
+            <div className={styles.courseCard}>
+              <p className={styles.courseTitle}>{c.title}</p>
+              <Image className={styles.courseImage} src={bgimg} />
+              <div className={styles.courseTitles}>
+                <p className={styles.coursesDescription}>
+                  <span>Descripción:</span> {c.description}
+                </p>
+                <p>
+                  <span>Precio: $</span>
+                  {c.price}
+                </p>
+                <p>
+                  <span>Duración: </span> {c.duration}
+                </p>
+                <p>
+                  <span>Cupos restantes:</span> {c.quotes}
+                </p>
+              </div>
+              <Button
+                variant="contained"
+                style={{ marginBottom: "20px", width: "250px" }}
+              >
+                Comprar
+              </Button>
+            </div>
+          ))
+        ) : (
+          <div>No tenemos cursos por el momento</div>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,4 @@
-.cardscontainer{
-    text-align: center;
-}
+
 .cardcontainer{
     -webkit-box-shadow: 0px 0px 20px -1px rgba(148,148,148,1);
 -moz-box-shadow: 0px 0px 20px -1px rgba(148,148,148,1);
@@ -9,8 +7,10 @@ margin: 1rem;
 width: 20rem;
 }
 .title{
-    font-size: 2rem;
-    margin: 0 auto;
+    font-size: 3rem;
+    border-bottom: 2px solid red;
+    width: 44rem;
+    margin-left: 4rem;
 }
 .imagecard{
     width: 20rem;
@@ -21,3 +21,48 @@ width: 20rem;
     text-align: start;
     width: 20rem;
 }
+.courseTitle {
+    font-size: 2rem;
+    text-transform: capitalize;
+  }
+  .courseTitle:hover{
+      cursor: pointer;
+  }
+  .courseImage {
+    width: 18rem;
+    height: 10rem;
+  }
+  .courseCard {
+    -webkit-box-shadow: 0px 0px 18px 0px rgba(158, 158, 158, 1);
+    -moz-box-shadow: 0px 0px 18px 0px rgba(158, 158, 158, 1);
+    box-shadow: 0px 0px 18px 0px rgba(158, 158, 158, 1);
+    width: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+  }
+  .courseTitles{
+      margin-top: 1rem;
+      padding: 1rem;
+      text-align: start;
+  }
+  .courseTitles span{
+      font-weight: 500;
+      font-size: 1.1rem;
+  }
+  .courseTitles p{
+  margin: 0 auto;
+  }
+  .coursesContainer{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-left: 3rem ;
+  }
+  .coursesDescription{
+      padding-bottom: 1rem;
+  }
+  

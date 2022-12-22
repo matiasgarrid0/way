@@ -62,21 +62,12 @@ const cursos = () => {
   useEffect(() => {
     getCourses();
   }, [search]);
-<<<<<<< Updated upstream:way/pages/cursos/index.js
-  const onSubmit = data => {
-    console.log(values);
-    values.initialDate = value;
-    axios.post('/api/courses',values)
-    .then((data) => console.log(data),setSearch(!search), handleClose())
-    .catch((err)=>(console.log(err)));
-=======
   const onSubmit = (data) => {
     values.initialDate = value;
     axios
       .post("/api/courses", values)
       .then((data) => console.log(data),setSearch(!search), handleClose())
       .catch((err) => console.log(err));
->>>>>>> Stashed changes:way/pages/cursos.js
   };
 
   return (
