@@ -1,0 +1,72 @@
+.bgImage{
+  background-image: url(../img/courseslay.jpg);
+  height: 30rem;
+  margin-top: -1rem;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+.bgImage p{
+ font-size: 4rem;
+ color: #fff;
+ font-weight: 500;
+}
+.coverBg{
+  width: 100%;
+  height: 30rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cursosTitle{
+  font-size: 3rem;
+    border-bottom: 2px solid red;
+    width: 9rem;
+    margin-left: 4rem;
+}
+.courseTitle {
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+.courseTitle:hover{
+    cursor: pointer;
+}
+.courseImage {
+  width: 18rem;
+  height: 10rem;
+}
+.courseCard {
+  -webkit-box-shadow: 0px 0px 18px 0px rgba(158, 158, 158, 1);
+  -moz-box-shadow: 0px 0px 18px 0px rgba(158, 158, 158, 1);
+  box-shadow: 0px 0px 18px 0px rgba(158, 158, 158, 1);
+  width: 22rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+.courseTitles{
+    margin-top: 1rem;
+    padding: 1rem;
+    text-align: start;
+}
+.courseTitles span{
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+.courseTitles p{
+margin: 0 auto;
+}
+.coursesContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.coursesDescription{
+    padding-bottom: 1rem;
+}
+

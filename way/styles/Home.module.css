@@ -140,3 +140,13 @@
     height: 70vh;
   }
 }
+.wppImage{
+  width: 5rem;
+  height: 5rem;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+.wppImage:hover{
+  cursor: pointer;
+}
