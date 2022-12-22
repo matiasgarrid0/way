@@ -3,7 +3,7 @@ import coursesController from '../../../controllers/coursesController';
 export default async function handler(req, res) {
     
     const {id} = req.query;
-
+    
     switch(req.method){
         case 'PUT':
             try {
@@ -17,6 +17,7 @@ export default async function handler(req, res) {
             break;
         case 'GET':
             try {
+                
                 const course = await coursesController.findCourse(id);
                 res.send(course);                
             } catch (err) {
