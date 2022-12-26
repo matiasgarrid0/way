@@ -32,6 +32,7 @@ const Course = {
     async deleteCourse(id) {
         try {
             await courseSchema.deleteOne({ _id: id });
+            return 'ok'
         } catch (err) {
             console.log(err);
             return err;

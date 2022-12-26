@@ -27,10 +27,14 @@ export default async function handler(req, res) {
             break;
         case 'DELETE':
             try {
-                await coursesController.deleteCourse(id);
-                return `deleted course whit id ${id}`;
+                console.log('here')
+                const data = await coursesController.deleteCourse(id);
+                if(data == 'ok'){
+                    res.send({message:`deleted course whit id ${id}`});
+                }
+                throw new Error('no se puedo eliminar');
             } catch (err) {
-                console.log(err);
+                console.log(err,'here');
                 res.status(404).send({message: err.message})
             }
             break;
