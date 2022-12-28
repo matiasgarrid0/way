@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 import styles from '../../styles/Cursos.module.css';
 import bgimg from '../../img/layoutbg.jpg';
@@ -23,109 +23,140 @@ const schema = yup
     duration: yup.string(),
   })
   .required();
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-    maxHeight: 600,
-  };
-const Curso = ({id}) => {
-  
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  maxHeight: 600,
+};
+const Curso = ({ id }) => {
+
   const [open, setOpen] = useState(false);
   const [course, setCourse] = useState(null);
   const [value, setValue] = useState(dayjs("2022-12-18T21:11:54"));
   const router = useRouter();
+
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  }
+  
+  const handleOpen = () => {
+    setOpen(true);
+    console.log(defaultValues);
+  };
+  const handleClose = () => setOpen(false);
+  const getCourse = () => {
+    axios.get(`/api/courses/${id}`)
+    .then((data) => {
+      console.log(data)
+      setCourse(data.data);
+      reset({
+        title: course?.title || '',
+        description: course?.description || '',
+        price: course?.price || '',
+        quotes: course?.quotes || '',
+        duration: course?.duration || '',
+      })
+    })
+    .catch((err) => (console.log(err)))
+  };
+  
+ 
+  const defaultValues = {
+    title: course?.title || '',
+    description: course?.description || '',
+    price: course?.price || '',
+    quotes: course?.quotes || '',
+    duration: course?.duration || '',
+  }
+  
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
-  const handleChange = () =>{
-    console.log('here');
+    reset,
+  } = useForm({ resolver: yupResolver(schema), defaultValues });
+  useEffect(() => {
+    getCourse();
+  }, [reset]);
+  const values = watch();
+  const deleteCourse = () => {
+    axios.delete(`/api/courses/${id}`)
+      .then((data) => {
+        if (data) {
+
+          router.push('/cursos');
+        }
+      })
+      .catch((err) => (console.log(err)));
   }
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-    const getCourse = () => {
-        console.log(id);
-        axios.get(`/api/courses/${id}`)
-        .then((data)=>{
-            console.log(data)
-            setCourse(data.data);
-        })
-        .catch((err)=>(console.log(err)))
-    };
+  const onSubmit = (e) => {
+    values.initialDate = value;
+    console.log(values);
+    axios.put(`/courses/${id}`)
+    .then(data => {
+      console.log(data)
+      router.push('/courses')
+    })
+    .catch(err=>console.log(err));
 
-    useEffect(()=>{
-        getCourse();
-    },[]);
-    const deleteCourse = () => {
-        axios.delete(`/api/courses/${id}`)
-        .then((data)=>{
-            if(data){
+  }
+  const cambiaTitulo = (e) => {
+    console.log(e.target.value);
+  }
+  return (
+    <div>
+      <h1>curso</h1>
+      {course && <>
+        <div className={styles.courseCard}>
+          <p className={styles.courseTitle}>{course.title}</p>
+          <Image className={styles.courseImage} src={bgimg} />
+          <div className={styles.courseTitles}>
+            <p className={styles.coursesDescription}>
+              <span>Descripción:</span> {course.description}
+            </p>
+            <p>
+              <span>Precio: $</span>
+              {course.price}
+            </p>
+            <p>
+              <span>Duración: </span> {course.duration}
+            </p>
+            <p>
+              <span>Cupos restantes:</span> {course.quotes}
+            </p>
+          </div>
+          <Button
+            onClick={handleOpen}
+            variant="contained"
+            style={{ marginBottom: "20px", width: "250px" }}
+          >
+            editar
+          </Button>
+          <Button
+            onClick={deleteCourse}
+            variant="contained"
+            style={{ marginBottom: "20px", width: "250px" }}
+          >
+            eliminar
+          </Button>
 
-                router.push('/cursos');
-            }
-        })
-        .catch((err)=>(console.log(err)));
-    }
-    const editCourse = () => {
-        console.log('holis');
-    }
-    const onSubmit = (e) => {
-      console.log('holis');
-    }
-    return (
-        <div>
-            <h1>curso</h1>
-            {course && <>
-            <div className={styles.courseCard}>
-                <p className={styles.courseTitle}>{course.title}</p>
-                <Image className={styles.courseImage} src={bgimg} />
-                <div className={styles.courseTitles}>
-                  <p className={styles.coursesDescription}>
-                    <span>Descripción:</span> {course.description}
-                  </p>
-                  <p>
-                    <span>Precio: $</span>
-                    {course.price}
-                  </p>
-                  <p>
-                    <span>Duración: </span> {course.duration}
-                  </p>
-                  <p>
-                    <span>Cupos restantes:</span> {course.quotes}
-                  </p>
-                </div>
-                <Button
-                onClick={handleOpen}
-                  variant="contained"
-                  style={{ marginBottom: "20px", width: "250px" }}
-                  >
-                  editar
-                </Button>
-                <Button
-                onClick={deleteCourse}
-                variant="contained"
-                style={{ marginBottom: "20px", width: "250px" }}
-                >
-                  eliminar
-                </Button>
-
-                <Button
-                  variant="contained"
-                  style={{ marginBottom: "20px", width: "250px" }}
-                  >
-                  comprar
-                </Button>
-              </div>
-              <Modal
+          <Button
+            variant="contained"
+            style={{ marginBottom: "20px", width: "250px" }}
+          >
+            comprar
+          </Button>
+        </div>
+        <Modal
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
@@ -137,7 +168,8 @@ const Curso = ({id}) => {
                 label="Título"
                 name="title"
                 style={{ width: "100%", marginBottom: "10px" }}
-                {...register("title")}
+                ref={register('title')}
+                //{...register("title")}
               />
               <p>{errors.title?.message}</p>
               <TextField
@@ -193,16 +225,17 @@ const Curso = ({id}) => {
             </form>
           </Box>
         </Modal>
-              </>
-              }
-        </div>
-    )
+        {defaultValues.title}
+      </>
+      }
+    </div>
+  )
 }
 
 
 Curso.getInitialProps = async ({ query }) => {
-    const {id} = query
-    
-    return {id}
+  const { id } = query
+
+  return { id }
 }
 export default Curso;
