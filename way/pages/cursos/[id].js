@@ -1,10 +1,4 @@
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
-import axios from 'axios';
-import styles from '../../styles/Cursos.module.css';
-import bgimg from '../../img/layoutbg.jpg';
-import { TextField, Box, Button, Modal } from "@mui/material";
-=======
 import NavBar from "../../components/Navbar";
 import axios from "axios";
 import styles from "../../styles/Cursos.module.css";
@@ -14,7 +8,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { styled, alpha } from "@mui/material/styles";
->>>>>>> d0e5dc3732931bdb0f4fc86128eccc386809b441
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -47,10 +40,6 @@ const style = {
   p: 4,
   maxHeight: 600,
 };
-<<<<<<< HEAD
-const Curso = ({ id }) => {
-
-=======
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -94,7 +83,6 @@ const StyledMenu = styled((props) => (
   },
 }));
 const Curso = ({ id }) => {
->>>>>>> d0e5dc3732931bdb0f4fc86128eccc386809b441
   const [open, setOpen] = useState(false);
   const [course, setCourse] = useState(null);
   const [value, setValue] = useState(dayjs("2022-12-18T21:11:54"));
