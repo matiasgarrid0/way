@@ -7,11 +7,13 @@ import wpp from "../img/whatsapp.png";
 
 export default function Home() {
   return (
+    
     <div>
       <Navbar />
       <div className={styles.bghome}></div>
       <Courses />
       <Image className={styles.wppImage} src={wpp} />
     </div>
+
   );
 }

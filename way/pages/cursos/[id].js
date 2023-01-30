@@ -19,6 +19,7 @@ import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { useSnackbar } from 'notistack';
 const schema = yup
   .object({
     title: yup.string().required().min(3).max(500),
@@ -94,6 +95,7 @@ const Curso = ({ id }) => {
     setAnchorEl(event.currentTarget);
   };
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   const {
     register,
@@ -133,9 +135,13 @@ const Curso = ({ id }) => {
       .then((data) => {
         if (data) {
           router.push("/cursos");
+          enqueueSnackbar('eliminado ah re');
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        enqueueSnackbar('no se pudo eliminar')
+      });
       setOpenDelete(!openDelete)
   };
   const editCourse = () => {
@@ -143,6 +149,7 @@ const Curso = ({ id }) => {
   };
   const onSubmit = (e) => {
     console.log("holis");
+    enqueueSnackbar('listo man todo hecho')
   };
   return (
     <div>

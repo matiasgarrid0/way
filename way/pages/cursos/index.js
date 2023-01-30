@@ -16,6 +16,8 @@ import styles from "../../styles/Cursos.module.css";
 import Image from "next/image";
 import bgimg from "../../img/layoutbg.jpg";
 import { useRouter } from "next/router";
+import { useSnackbar } from 'notistack';
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -47,6 +49,7 @@ const cursos = () => {
   const [search, setSearch] = useState(false);
   const [value, setValue] = useState(dayjs("2022-12-18T21:11:54"));
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const {
     register,
     handleSubmit,
@@ -71,7 +74,12 @@ const cursos = () => {
     values.initialDate = value;
     axios
       .post("/api/courses", values)
-      .then((data) => console.log(data), setSearch(!search), handleClose())
+      .then((data) => {
+        console.log(data), 
+        setSearch(!search),
+        enqueueSnackbar('listo ah re ')
+        handleClose()
+      })
       .catch((err) => console.log(err));
   };
   const goTo = (id) => {
