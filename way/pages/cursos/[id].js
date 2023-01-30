@@ -136,8 +136,11 @@ const Curso = ({ id }) => {
         }
       })
       .catch((err) => console.log(err));
-      setOpenDelete(!openDelete)
+    setOpenDelete(!openDelete);
   };
+  const addToCart = () => {
+    
+  }
   const editCourse = () => {
     console.log("holis");
   };
@@ -147,167 +150,195 @@ const Curso = ({ id }) => {
   return (
     <div>
       <NavBar />
-      <h1>{course?.title.toUpperCase()}</h1>
-      {course && (
-        <>
-          <div className={styles.courseCard}>
-            <p className={styles.courseTitle}>{course.title}</p>
-            <Image className={styles.courseImage} src={bgimg} />
-            <div className={styles.courseTitles}>
-              <p className={styles.coursesDescription}>
-                <span>Descripción:</span> {course.description}
-              </p>
-              <p>
-                <span>Precio: $</span>
-                {course.price}
-              </p>
-              <p>
-                <span>Duración: </span> {course.duration}
-              </p>
-              <p>
-                <span>Cupos restantes:</span> {course.quotes}
-              </p>
-            </div>
-            <div>
-              <Button
-                id="demo-customized-button"
-                aria-controls={openMenu ? "demo-customized-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={openMenu ? "true" : undefined}
-                variant="contained"
-                style={{ marginBottom: "20px", width: "250px" }}
-                disableElevation
-                onClick={handleClick}
-                endIcon={<KeyboardArrowDownIcon />}
-              >
-                Opciones
-              </Button>
-              <StyledMenu
-                id="demo-customized-menu"
-                MenuListProps={{
-                  "aria-labelledby": "demo-customized-button",
-                }}
-                anchorEl={anchorEl}
-                open={openMenu}
-                onClose={handleCloseMenu}
-              >
-                <MenuItem onClick={handleOpen} disableRipple>
-                  <EditIcon />
-                  Editar
-                </MenuItem>
-                <MenuItem onClick={handleModalDelete} disableRipple>
-                  <DeleteIcon />
-                  Eliminar
-                </MenuItem>
-              </StyledMenu>
+      <div className={styles.coursesContainer}>
+        <div>
+          <h1 style={{ marginLeft: "30px" }}>{course?.title.toUpperCase()}</h1>
+          {course && (
+            <>
+              <div style={{ marginLeft: "30px" }} className={styles.courseCard}>
+                <p className={styles.courseTitle}>{course.title}</p>
+                <Image className={styles.courseImage} src={bgimg} />
+                <div className={styles.courseTitles}>
+                  <p className={styles.coursesDescription}>
+                    <span>Descripción:</span> {course.description}
+                  </p>
+                  <p>
+                    <span>Precio: $</span>
+                    {course.price}
+                  </p>
+                  <p>
+                    <span>Duración: </span> {course.duration}
+                  </p>
+                  <p>
+                    <span>Cupos restantes:</span> {course.quotes}
+                  </p>
+                </div>
+                <div>
+                  <Button
+                    id="demo-customized-button"
+                    aria-controls={
+                      openMenu ? "demo-customized-menu" : undefined
+                    }
+                    aria-haspopup="true"
+                    aria-expanded={openMenu ? "true" : undefined}
+                    variant="contained"
+                    style={{ marginBottom: "20px", width: "250px" }}
+                    disableElevation
+                    onClick={handleClick}
+                    endIcon={<KeyboardArrowDownIcon />}
+                  >
+                    Opciones
+                  </Button>
+                  <StyledMenu
+                    id="demo-customized-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "demo-customized-button",
+                    }}
+                    anchorEl={anchorEl}
+                    open={openMenu}
+                    onClose={handleCloseMenu}
+                  >
+                    <MenuItem onClick={handleOpen} disableRipple>
+                      <EditIcon />
+                      Editar
+                    </MenuItem>
+                    <MenuItem onClick={handleModalDelete} disableRipple>
+                      <DeleteIcon />
+                      Eliminar
+                    </MenuItem>
+                  </StyledMenu>
+                  <Modal
+                    open={openDelete}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <p>
+                        Realmente deseas eliminar este curso de forma
+                        permanente?
+                      </p>
+                      <Button
+                        color="error"
+                        style={{ float: "right", marginTop: "20px" }}
+                        variant="outlined"
+                        type="sumbit"
+                        onClick={deleteCourse}
+                      >
+                        Eliminar
+                      </Button>
+                      <Button
+                        style={{
+                          float: "right",
+                          marginTop: "20px",
+                          marginRight: "20px",
+                        }}
+                        variant="contained"
+                        type="sumbit"
+                        onClick={handleModalDelete}
+                      >
+                        Cancelar
+                      </Button>
+                    </Box>
+                  </Modal>
+                </div>
+
+                <Button
+                  variant="contained"
+                  style={{ marginBottom: "20px", width: "250px" }}
+                >
+                  agregar al carro
+                </Button>
+              </div>
               <Modal
-            open={openDelete}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <p>Realmente deseas eliminar este curso de forma permanente?</p>
-                <Button
-                  color="error"
-                  style={{ float: "right", marginTop: "20px" }}
-                  variant="outlined"
-                  type="sumbit"
-                  onClick={deleteCourse}
-                >
-                  Eliminar
-                </Button>
-                <Button
-                  
-                  style={{ float: "right", marginTop: "20px", marginRight:'20px' }}
-                  variant="contained"
-                  type="sumbit"
-                  onClick={handleModalDelete}
-                >
-                  Cancelar
-                </Button>
-    
-            </Box>
-          </Modal>
-            </div>
-
-            <Button
-              variant="contained"
-              style={{ marginBottom: "20px", width: "250px" }}
-            >
-              comprar
-            </Button>
-          </div>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <TextField
-                  label="Título"
-                  name="title"
-                  style={{ width: "100%", marginBottom: "10px" }}
-                  {...register("title")}
-                />
-                <p>{errors.title?.message}</p>
-                <TextField
-                  label="Descripción"
-                  name="description"
-                  style={{ width: "100%", marginBottom: "10px" }}
-                  {...register("description")}
-                />
-                <p>{errors.description?.message}</p>
-                <TextField
-                  label="Precio"
-                  name="price"
-                  style={{ width: "100%", marginBottom: "10px" }}
-                  {...register("price")}
-                />
-
-                <p>{errors.price?.message}</p>
-                <TextField
-                  label="Cupo"
-                  name="quotes"
-                  style={{ width: "100%", marginBottom: "10px" }}
-                  {...register("quotes")}
-                />
-
-                <p>{errors.quotes?.message}</p>
-                <TextField
-                  label="Duración"
-                  name="duration"
-                  style={{ width: "100%", marginBottom: "10px" }}
-                  {...register("duration")}
-                />
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Stack spacing={3}>
-                    <DesktopDatePicker
-                      label="Fecha de inicio"
-                      inputFormat="MM/DD/YYYY"
-                      value={value}
-                      name="initialDate"
-                      onChange={handleChange}
-                      renderInput={(params) => <TextField {...params} />}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField
+                      label="Título"
+                      name="title"
+                      style={{ width: "100%", marginBottom: "10px" }}
+                      {...register("title")}
                     />
-                  </Stack>
-                </LocalizationProvider>
+                    <p>{errors.title?.message}</p>
+                    <TextField
+                      label="Descripción"
+                      name="description"
+                      style={{ width: "100%", marginBottom: "10px" }}
+                      {...register("description")}
+                    />
+                    <p>{errors.description?.message}</p>
+                    <TextField
+                      label="Precio"
+                      name="price"
+                      style={{ width: "100%", marginBottom: "10px" }}
+                      {...register("price")}
+                    />
 
-                <Button
-                  color="success"
-                  style={{ float: "right", marginTop: "20px" }}
-                  variant="contained"
-                  type="sumbit"
-                >
-                  Crear
-                </Button>
-              </form>
-            </Box>
-          </Modal>
-        </>
-      )}
+                    <p>{errors.price?.message}</p>
+                    <TextField
+                      label="Cupo"
+                      name="quotes"
+                      style={{ width: "100%", marginBottom: "10px" }}
+                      {...register("quotes")}
+                    />
+
+                    <p>{errors.quotes?.message}</p>
+                    <TextField
+                      label="Duración"
+                      name="duration"
+                      style={{ width: "100%", marginBottom: "10px" }}
+                      {...register("duration")}
+                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Stack spacing={3}>
+                        <DesktopDatePicker
+                          label="Fecha de inicio"
+                          inputFormat="MM/DD/YYYY"
+                          value={value}
+                          name="initialDate"
+                          onChange={handleChange}
+                          renderInput={(params) => <TextField {...params} />}
+                        />
+                      </Stack>
+                    </LocalizationProvider>
+
+                    <Button
+                      color="success"
+                      style={{ float: "right", marginTop: "20px" }}
+                      variant="contained"
+                      type="sumbit"
+                    >
+                      Crear
+                    </Button>
+                  </form>
+                </Box>
+              </Modal>
+            </>
+          )}
+        </div>
+        <div className={styles.courseDesc}>
+          <h2 className={styles.courseDescTitle}>Descripción del curso</h2>
+          <div>
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

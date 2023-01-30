@@ -11,8 +11,7 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      unique: [true, 'email is duplicated'],
-      required: [true, 'email is mandatory'],
+      unique: [true, 'email is duplicated'], 
       minlength: [3, 'email must have at least 3 characters'],
       maxlength: [99, 'email must be shorter than 99 characters'],
     },
@@ -21,11 +20,20 @@ const userSchema = new Schema(
       required: [true, 'password is required'],
       minlength: [8,'password must be have 8 characters'],
     },
+    completeName:{
+      type:String,
+    },
     role: {
       type: String,
       required: [true, 'role is required'],
       default: 'user',
-    }
+    },
+    courses:{
+      type: Array,
+    },
+    cart:{
+      type: Array,
+    },
   },
   {
     timestamps: true,
