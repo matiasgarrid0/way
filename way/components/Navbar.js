@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, {useState} from 'react'
+
 //@mui
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,6 +18,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 //img
 import Image from 'next/image'
 import Logo from '../img/logo.png'
+import { BrunchDiningTwoTone, ShoppingCartOutlined } from '@mui/icons-material';
+import { Badge } from '@mui/material';
 
 const pages = ['contacto', 'cursos', 'nosotros'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -81,7 +84,7 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+         
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -95,6 +98,13 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <Link href={'/cart'} passHref>
+              <IconButton sx={{margin:'10px'}}>
+               <Badge badgeContent={2} color='secondary'>
+                <ShoppingCartOutlined/>
+               </Badge>
+              </IconButton>
+            </Link>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />

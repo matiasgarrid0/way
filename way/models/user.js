@@ -3,16 +3,21 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 
 const userSchema = new Schema(
   {
-    username: {
+    user: {
+      type: String,
+    },
+    name: {
       type: String,
       required: [true, 'complete name is mandatory'],
       minlength: [3, 'complete name must have at least 3 characters'],
       maxlength: [99, 'complete name must be shorter than 99 characters'],
     },
+    surname: {
+      type: String,
+    },
     email: {
       type: String,
-      unique: [true, 'email is duplicated'],
-      required: [true, 'email is mandatory'],
+      unique: [true, 'email is duplicated'], 
       minlength: [3, 'email must have at least 3 characters'],
       maxlength: [99, 'email must be shorter than 99 characters'],
     },
@@ -23,9 +28,15 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      required: [true, 'role is required'],
+      required: [false, 'role is required'],
       default: 'user',
-    }
+    },
+    courses:{
+      type: Array,
+    },
+    cart:{
+      type: Array,
+    },
   },
   {
     timestamps: true,

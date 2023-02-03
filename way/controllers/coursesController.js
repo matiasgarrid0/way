@@ -40,8 +40,6 @@ const Course = {
     },
     async createCourse(data) {
         try {
-
-
             const { title, description, usersIds, price, image, quotes } = data;
             if (!title && description && price && image && quotes && usersIds) {
                 throw new Error('data is required');
