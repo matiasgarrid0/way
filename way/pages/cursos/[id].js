@@ -118,7 +118,7 @@ const Curso = ({ id }) => {
   const getCourse = () => {
     console.log(id);
     axios
-      .get(`/api/courses/${id}`)
+      .get(`http://localhost:3040/api/courses/${id}`)
       .then((data) => {
         console.log(data);
         setCourse(data.data);
@@ -131,7 +131,7 @@ const Curso = ({ id }) => {
   }, []);
   const deleteCourse = () => {
     axios
-      .delete(`/api/courses/${id}`)
+      .delete(`http://localhost:3040/api/courses/${id}`)
       .then((data) => {
         if (data) {
           router.push("/cursos");

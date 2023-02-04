@@ -63,8 +63,9 @@ const cursos = () => {
 
   const values = watch();
   const getCourses = async () => {
-    const { data } = await axios.get("api/courses");
-    setCourses(data);
+    axios.get('http://localhost:3040/courses')
+    .then((data) =>setCourses(data))
+    .catch((err)=>setCourses([]));
   };
   useEffect(() => {
     getCourses();
@@ -83,6 +84,7 @@ const cursos = () => {
       .catch((err) => console.log(err));
   };
   const goTo = (id) => {
+    console.log(id);
     router.push(`/cursos/${id}`);
   }
   return (
@@ -101,8 +103,8 @@ const cursos = () => {
         </Button>
         <div className={styles.coursesContainer}>
           {courses ? (
-            courses?.map((c) => (
-              <div className={styles.courseCard} onClick={()=>(goTo(c._id))}>
+            courses?.map((c,index) => (
+              <div key={index} className={styles.courseCard} onClick={goTo}>
                 <p className={styles.courseTitle}>{c.title}</p>
                 <Image className={styles.courseImage} src={bgimg} />
                 <div className={styles.courseTitles}>

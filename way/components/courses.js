@@ -11,7 +11,7 @@ const Courses = () => {
   const [search, setSearch] = useState(false);
 
   const getCourses = async () => {
-    const { data } = await axios.get("api/courses");
+    const { data } = await axios.get("http://localhost:3040/api/courses");
     setCourses(data);
   };
 
