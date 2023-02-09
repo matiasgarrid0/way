@@ -52,15 +52,16 @@ const register = () => {
     console.log(user);
 
     axios
-      .post("/api/register",{...user})
+      .post("http://localhost:304/user/",{...user})
       .then((data) => router.push('/home'))
       .catch((err) => console.log(err));
   };
   const onSubmitLogin = (e) => {
     e.preventDefault();
     console.log(login);
-    axios.post('/api/login',{...login})
+    axios.post('http://localhost:3040/login',{...login})
     .then((data)=>{
+      localStorage.setItem('token',data.data.token);
       console.log(data);
       router.push('/home')
       //enviar al inicio;

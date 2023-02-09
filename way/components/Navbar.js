@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, {useState} from 'react'
+import React, {useState, useContext,useEffect} from 'react'
 
 //@mui
 import AppBar from '@mui/material/AppBar';
@@ -20,7 +20,7 @@ import Image from 'next/image'
 import Logo from '../img/logo.png'
 import { BrunchDiningTwoTone, ShoppingCartOutlined } from '@mui/icons-material';
 import { Badge } from '@mui/material';
-
+import CartContext from '../context/cart/CartContext';
 const pages = ['contacto', 'cursos', 'nosotros'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -42,6 +42,9 @@ const Navbar = () => {
     const handleCloseUserMenu = () => {
       setAnchorElUser(null);
     };
+    const context = useContext(CartContext);
+    console.log(context.context.shops.length);
+  useEffect(()=>{},[]);
   return (
     <div>
         <AppBar position="static" style={{background:'#FF2926'}}>
@@ -100,7 +103,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Link href={'/cart'} passHref>
               <IconButton sx={{margin:'10px'}}>
-               <Badge badgeContent={2} color='secondary'>
+               <Badge badgeContent={context.context.shops.length} color='secondary'>
                 <ShoppingCartOutlined/>
                </Badge>
               </IconButton>
@@ -131,6 +134,11 @@ const Navbar = () => {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+               <MenuItem key={23323323} onClick={(e)=>{localStorage.removeItem('token')
+                handleCloseUserMenu(e) 
+                }}>
+                  <Typography textAlign="center">cerrar sesion ahora</Typography>
+                </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

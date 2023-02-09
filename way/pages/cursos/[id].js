@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import Link from 'next/link';
 import NavBar from "../../components/Navbar";
 import axios from "axios";
 import styles from "../../styles/Cursos.module.css";
@@ -20,6 +21,19 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useSnackbar } from 'notistack';
+import CartContext from '../../context/cart/CartContext';
+const styleLogin = {
+  position: "absolute",
+  marginTop:"200px",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "#fff",
+  border: "1px solid #eaeaea",
+  boxShadow: 24,
+  p: 4,
+  maxHeight: 600,
+}
 const schema = yup
   .object({
     title: yup.string().required().min(3).max(500),
@@ -88,9 +102,17 @@ const Curso = ({ id }) => {
   const [course, setCourse] = useState(null);
   const [value, setValue] = useState(dayjs("2022-12-18T21:11:54"));
   const [openDelete, setOpenDelete] = useState(false);
-
+  const [url,setUrl] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [permission,setPermission] = useState(false);
   const openMenu = Boolean(anchorEl);
+  const context = useContext(CartContext);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [updateContext,setUpdateContext] = useState(false);
+  const [login,setLogin] = useState({
+    user: '',
+    password: '',
+  });
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -111,6 +133,7 @@ const Curso = ({ id }) => {
   };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleCloseLogin = () => setOpenLogin(!openLogin);
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
@@ -118,10 +141,11 @@ const Curso = ({ id }) => {
   const getCourse = () => {
     console.log(id);
     axios
-      .get(`http://localhost:3040/api/courses/${id}`)
+      .get(`http://localhost:3040/courses/${id}`)
       .then((data) => {
         console.log(data);
-        setCourse(data.data);
+        setCourse(data.data.course);
+        setPermission(data.data.permission);
       })
       .catch((err) => console.log(err));
   };
@@ -129,9 +153,12 @@ const Curso = ({ id }) => {
   useEffect(() => {
     getCourse();
   }, []);
+  useEffect(()=>{
+
+  },[openLogin]);
   const deleteCourse = () => {
     axios
-      .delete(`http://localhost:3040/api/courses/${id}`)
+      .delete(`http://localhost:3040/courses/${id}`)
       .then((data) => {
         if (data) {
           router.push("/cursos");
@@ -142,7 +169,13 @@ const Curso = ({ id }) => {
     setOpenDelete(!openDelete);
   };
   const addToCart = () => {
-    
+    if(!context.context.shops.includes(course)){
+
+      context.context.shops.push(course);
+      setUpdateContext(!updateContext);
+    }else{
+      enqueueSnackbar('El curso ya esta añadido al carrito');
+    }
   }
   const editCourse = () => {
     console.log("holis");
@@ -151,6 +184,58 @@ const Curso = ({ id }) => {
     console.log("holis");
     enqueueSnackbar('listo man todo hecho')
   };
+  const comprar = () =>{
+    const curso = {
+      title: course.description,
+      description: course.title,
+      price: course.price,
+      quantity: 1,
+      unit_price: course.price,
+      picture_url: '',
+    }
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        'authtoken': token,
+      }
+    }
+    axios.post('http://localhost:3040/users/pagar',[curso],config)
+    .then((data)=>{
+      console.log(data);
+      if(data.data.message?.includes('No token')){
+        setOpenLogin(!openLogin);
+        enqueueSnackbar('debe iniciar sesion');
+      }
+      if(data.data.includes('https')){
+        setUrl(data.data);
+      }
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
+  }
+  const onSubmitLogin = (e) => {
+    e.preventDefault();
+    console.log(login);
+    axios.post('http://localhost:3040/login',{...login})
+    .then((data)=>{
+      localStorage.setItem('token',data.data.token);
+      console.log(data);
+      handleCloseLogin();
+      comprar();
+      //enviar al inicio;
+    })
+    .catch((err)=>(console.log(err)));
+  }
+  const handleChangeLogin = (e) => {
+    setLogin({
+      ...login,
+      [e.target.name]:e.target.value,
+    })
+  }
+  useEffect(()=>{
+
+  },[updateContext]);
   return (
     <div>
       <NavBar />
@@ -177,7 +262,7 @@ const Curso = ({ id }) => {
                     <span>Cupos restantes:</span> {course.quotes}
                   </p>
                 </div>
-                <div>
+                {permission && <div>
                   <Button
                     id="demo-customized-button"
                     aria-controls={
@@ -245,15 +330,28 @@ const Curso = ({ id }) => {
                       </Button>
                     </Box>
                   </Modal>
-                </div>
+                </div>}
 
                 <Button
                   variant="contained"
                   style={{ marginBottom: "20px", width: "250px" }}
+                  onClick={addToCart}
                 >
                   agregar al carro
                 </Button>
-              </div>
+                <Button
+                  variant="contained"
+                  style={{ marginBottom: "20px", width: "250px" }}
+                  onClick={comprar}
+                >
+                  comprar solo este
+                </Button>
+                {url &&
+
+<Link href={url}>Comprar</Link>
+                  
+                } 
+                </div>
               <Modal
                 open={open}
                 onClose={handleClose}
@@ -342,6 +440,41 @@ const Curso = ({ id }) => {
             </p>
           </div>
         </div>
+        <Modal
+        open={openLogin}
+        onClose={handleCloseLogin}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={styleLogin}>
+              <p style={{ textAlign: "center", fontSize: "25px", margin: "0" }}>
+              Ingresar
+            </p>
+            <form onSubmit={(e)=>onSubmitLogin(e)}>
+
+            <TextField
+              label="Usuario"
+              name="user"
+              style={{ width: "100%", margin: "5px" }}
+              onChange={(e)=>handleChangeLogin(e)}
+              />
+            <TextField
+              type={"password"}
+              label="Contraseña"
+              name="password"
+              style={{ width: "100%", margin: "5px" }}
+              onChange={(e)=>handleChangeLogin(e)}
+              />
+            <Button
+              color="success"
+              style={{ width: "100%", marginTop: "20px" }}
+              variant="contained"
+              type="sumbit"
+              >
+              Iniciar Sesión
+            </Button>
+              </form>
+          </Box>
+        </Modal>
       </div>
     </div>
   );

@@ -43,9 +43,10 @@ const schema = yup
 
 const cursos = () => {
   const [open, setOpen] = useState(false);
+  const [permission, setPermission] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState();
   const [search, setSearch] = useState(false);
   const [value, setValue] = useState(dayjs("2022-12-18T21:11:54"));
   const router = useRouter();
@@ -64,8 +65,12 @@ const cursos = () => {
   const values = watch();
   const getCourses = async () => {
     axios.get('http://localhost:3040/courses')
-    .then((data) =>setCourses(data))
-    .catch((err)=>setCourses([]));
+    .then((data) =>{
+      setCourses(data.data.courses)
+      setPermission(data.data.permission);
+      console.log(data);
+    })
+    .catch((err)=>console.log(err));
   };
   useEffect(() => {
     getCourses();
@@ -97,14 +102,14 @@ const cursos = () => {
       </div>
       <div style={{ marginLeft: "20px" }}>
         <p className={styles.cursosTitle}>Cursos</p>
-        <Button onClick={handleOpen} variant="contained" style={{marginBottom:'20px'}}>
-          Crear Curso
+        {permission && <Button onClick={handleOpen} variant="contained" style={{marginBottom:'20px'}}>
+          Crear Cursos
           <AddIcon style={{ marginLeft: "5px" }} />
-        </Button>
+        </Button>}
         <div className={styles.coursesContainer}>
-          {courses ? (
-            courses?.map((c,index) => (
-              <div key={index} className={styles.courseCard} onClick={goTo}>
+          {courses && 
+            courses.map((c,index) => (
+              <div key={index} className={styles.courseCard} onClick={(e)=>(goTo(c._id))}>
                 <p className={styles.courseTitle}>{c.title}</p>
                 <Image className={styles.courseImage} src={bgimg} />
                 <div className={styles.courseTitles}>
@@ -130,9 +135,9 @@ const cursos = () => {
                 </Button>
               </div>
             ))
-          ) : (
+          
+        }
             <div>No tenemos cursos por el momento</div>
-          )}
         </div>
         <Modal
           open={open}
