@@ -102,11 +102,7 @@ const Curso = ({ id }) => {
   const [course, setCourse] = useState(null);
   const [value, setValue] = useState(dayjs("2022-12-18T21:11:54"));
   const [openDelete, setOpenDelete] = useState(false);
-<<<<<<< HEAD
-  
-=======
   const [url,setUrl] = useState(null);
->>>>>>> master
   const [anchorEl, setAnchorEl] = useState(null);
   const [permission,setPermission] = useState(false);
   const openMenu = Boolean(anchorEl);
@@ -121,18 +117,7 @@ const Curso = ({ id }) => {
     setAnchorEl(event.currentTarget);
   };
   const router = useRouter();
-<<<<<<< HEAD
-  
-  const cart = []
-  const addToCart = () => {
-    cart.push(course)
-   const compare = cart.filter(course => (course._id === course._id))
-   console.log(compare)
-    localStorage.setItem('cartItems', JSON.stringify(cart))
-  }
-=======
   const { enqueueSnackbar } = useSnackbar();
->>>>>>> master
 
   const {
     register,
@@ -157,13 +142,8 @@ const Curso = ({ id }) => {
     axios
       .get(`http://localhost:3040/courses/${id}`)
       .then((data) => {
-<<<<<<< HEAD
-        setCourse(data.data);
-=======
-        console.log(data);
         setCourse(data.data.course);
         setPermission(data.data.permission);
->>>>>>> master
       })
       .catch((err) => console.log(err));
   };
@@ -186,9 +166,6 @@ const Curso = ({ id }) => {
       .catch((err) => console.log(err));
     setOpenDelete(!openDelete);
   };
-<<<<<<< HEAD
-
-=======
   const addToCart = () => {
     if(!context.context.shops.includes(course)){
 
@@ -198,7 +175,6 @@ const Curso = ({ id }) => {
       enqueueSnackbar('El curso ya esta añadido al carrito');
     }
   }
->>>>>>> master
   const editCourse = () => {
     console.log("holis");
   };
