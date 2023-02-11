@@ -3,11 +3,17 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 
 const userSchema = new Schema(
   {
-    username: {
+    user: {
+      type: String,
+    },
+    name: {
       type: String,
       required: [true, 'complete name is mandatory'],
       minlength: [3, 'complete name must have at least 3 characters'],
       maxlength: [99, 'complete name must be shorter than 99 characters'],
+    },
+    surname: {
+      type: String,
     },
     email: {
       type: String,
@@ -20,12 +26,9 @@ const userSchema = new Schema(
       required: [true, 'password is required'],
       minlength: [8,'password must be have 8 characters'],
     },
-    completeName:{
-      type:String,
-    },
     role: {
       type: String,
-      required: [true, 'role is required'],
+      required: [false, 'role is required'],
       default: 'user',
     },
     courses:{

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { useRouter } from 'next/router'
 import { Button, TextField } from "@mui/material";
 import Navbar from "../components/Navbar";
 import { Box } from "@mui/system";
-
+import axios from 'axios';
 const style = {
   position: "absolute",
   marginTop:"350px",
@@ -30,16 +31,55 @@ const styleLogin = {
 
 const register = () => {
   const [register, setRegister] = useState(false);
-
+  const [user, setUser] = useState({
+    name: '',
+    surname: '',
+    email: '',
+    user: '',
+    password: '',
+    passwordTwo: '',
+  });
+  const [login,setLogin] = useState({
+    user: '',
+    password: '',
+  });
+  const router = useRouter()
   const handleRegister = () => {
     setRegister(!register);
   };
-  const onSubmit = () => {
+  const onSubmitRegister = (e) => {
+    e.preventDefault();
+    console.log(user);
+
     axios
-      .post("/api/register", { username, password })
-      .then((data) => console.log(data))
+      .post("http://localhost:304/user/",{...user})
+      .then((data) => router.push('/home'))
       .catch((err) => console.log(err));
   };
+  const onSubmitLogin = (e) => {
+    e.preventDefault();
+    console.log(login);
+    axios.post('http://localhost:3040/login',{...login})
+    .then((data)=>{
+      localStorage.setItem('token',data.data.token);
+      console.log(data);
+      router.push('/home')
+      //enviar al inicio;
+    })
+    .catch((err)=>(console.log(err)));
+  }
+  const handleChangeRegister = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]:e.target.value,
+    })
+  }
+  const handleChangeLogin = (e) => {
+    setLogin({
+      ...login,
+      [e.target.name]:e.target.value,
+    })
+  }
   return (
     <div>
       <Navbar />
@@ -49,71 +89,86 @@ const register = () => {
               <p style={{ textAlign: "center", fontSize: "25px", margin: "0" }}>
               Ingresar
             </p>
+            <form onSubmit={(e)=>onSubmitLogin(e)}>
+
             <TextField
               label="Usuario"
-              name="name"
+              name="user"
               style={{ width: "100%", margin: "5px" }}
-            />
+              onChange={(e)=>handleChangeLogin(e)}
+              />
             <TextField
               type={"password"}
-              label="Contrase"
-              name="name"
+              label="Contraseña"
+              name="password"
               style={{ width: "100%", margin: "5px" }}
-            />
+              onChange={(e)=>handleChangeLogin(e)}
+              />
             <Button
               color="success"
               style={{ width: "100%", marginTop: "20px" }}
               variant="contained"
               type="sumbit"
-            >
+              >
               Iniciar Sesión
             </Button>
+              </form>
           </Box>
         ) : (
           <Box sx={style}>
             <p style={{ textAlign: "center", fontSize: "25px", margin: "0" }}>
               Crear Cuenta
             </p>
+            <form onSubmit={(e)=>onSubmitRegister(e)}>
+
             <TextField
               label="Nombre"
               name="name"
               style={{ width: "100%", margin: "5px" }}
+              onChange={(e)=>handleChangeRegister(e)}
             />
             <TextField
               label="Apellido"
-              name="name"
+              name="surname"
               style={{ width: "100%", margin: "5px" }}
+              onChange={(e)=>handleChangeRegister(e)}
             />
             <TextField
               label="Email"
-              name="name"
+              name="email"
               style={{ width: "100%", margin: "5px" }}
+              onChange={(e)=>handleChangeRegister(e)}
             />
             <TextField
               label="Usuario"
-              name="name"
+              name="user"
               style={{ width: "100%", margin: "5px" }}
+              onChange={(e)=>handleChangeRegister(e)}
             />
             <TextField
               type={"password"}
-              label="Contrase"
-              name="name"
+              label="Contraseña"
+              name="password"
               style={{ width: "100%", margin: "5px" }}
+              onChange={(e)=>handleChangeRegister(e)}
             />
             <TextField
               type={"password"}
-              label="Repetir Contrase"
-              name="name"
+              label="Repetir Contraseña"
+              name="passwordTwo"
               style={{ width: "100%", margin: "5px" }}
-            />
+              onChange={(e)=>handleChangeRegister(e)}
+              />
             <Button
               color="success"
               style={{ width: "100%", marginTop: "20px" }}
+              onChange={(e)=>handleChangeRegister(e)}
               variant="contained"
               type="sumbit"
-            >
+              >
               Registrarse
             </Button>
+              </form> 
             <p style={{ width: "100%" }}>
               Ya tienes cuenta?{" "}
               <span>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/router'
 import styles from "../styles/Courses.module.css";
 import { Button } from "@mui/material";
 import Image from "next/image";
@@ -9,16 +10,22 @@ import axios from "axios";
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState(false);
+  const router = useRouter()
 
-  const getCourses = async () => {
-    const { data } = await axios.get("api/courses");
-    setCourses(data);
+  const getCourses = () => {
+    axios.get('http://localhost:3040/courses')
+    .then((data) =>{
+      setCourses(data.data.courses);     
+    })
+    .catch((err)=>setCourses(console.log(err)));
   };
 
   useEffect(() => {
     getCourses();
   }, [search]);
-
+  const comprar = (id) =>{
+    router.push( `/cursos/${id}`);
+  }
   return (
     <div className={styles.coursesAlign}>
       <p className={styles.title}>Conocé nuestra oferta educativa</p>
@@ -47,6 +54,7 @@ const Courses = () => {
               <Button
                 variant="contained"
                 style={{ marginBottom: "20px", width: "250px" }}
+                onClick={()=>(comprar(c._id))}
               >
                 Comprar
               </Button>
