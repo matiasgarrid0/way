@@ -1,0 +1,68 @@
+.titleProfile {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.titleProfile p {
+  font-size: 3rem;
+  font-weight: 500;
+  border-bottom: 2px solid red;
+  width: 70%;
+}
+.divTabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem;
+  -webkit-box-shadow: 0px 0px 5px 2px rgba(191, 191, 191, 1);
+  -moz-box-shadow: 0px 0px 5px 2px rgba(191, 191, 191, 1);
+  box-shadow: 0px 0px 5px 2px rgba(191, 191, 191, 1);
+}
+.profileTitle{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.orderContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem;
+    width: 40rem;
+    padding: 1rem 2rem;
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(212, 212, 212, 1);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(212, 212, 212, 1);
+    box-shadow: 0px 0px 5px 3px rgba(212, 212, 212, 1);
+  }
+  .courseListTitle {
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+  .dateInit {
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin: 0 auto;
+  }
+  .imageCart {
+    width: 250px;
+    height: 200px;
+  }
+  .resumeOrder {
+    padding: 2rem;
+    margin: 2rem;
+    width: 20rem;
+    max-width: 20rem;
+    max-height: 50rem;
+    -webkit-box-shadow: 0px 0px 14px -2px rgba(112, 112, 112, 1);
+    -moz-box-shadow: 0px 0px 14px -2px rgba(112, 112, 112, 1);
+    box-shadow: 0px 0px 14px -2px rgba(112, 112, 112, 1);
+  }
+  
+  .resumeTitle{
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.2rem;
+    border-bottom: solid 1px red;
+  }
+  
+  .resumeDivider{
+    border-bottom: solid 2px black;
+  }

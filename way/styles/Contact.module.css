@@ -1,0 +1,159 @@
+.containerMap {
+  width: 100%;
+  height: 26rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.titleContact {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.titleContact p {
+  font-size: 3rem;
+  font-weight: 500;
+  border-bottom: 2px solid red;
+  width: 70%;
+}
+
+/*-----------------------------------------------------------------*/
+/*--------------------------*CONTACT FORM*-------------------------*/
+/*-----------------------------------------------------------------*/
+
+
+  .pTitleExperience{
+    font-size: 2rem;
+  }
+  .divContainerContact {
+    height: 36rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f4;
+  }
+  .divContainerElementsContact {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .boxContact{
+      width: 60rem;
+  }
+  .divCardContact {
+    width: 70rem;
+    height: 26rem;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 8px 18px 2px rgba(138, 138, 138, 1);
+    -moz-box-shadow: 0px 8px 18px 2px rgba(138, 138, 138, 1);
+    box-shadow: 0px 8px 18px 2px rgba(138, 138, 138, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .container2Inputs{
+      display: flex;
+  }
+  
+  .container-img-div-contact{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 70rem;
+      margin-top: 1rem;
+  }
+  
+  .titleTextContact{
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--hardGrey);
+      margin: 0;
+  }
+  
+  .textContact{
+      font-size: 1.5rem;
+      width: 30rem;
+      color: var(--hardGrey);
+  }
+  
+  .img-contact {
+    width: 15rem;
+    margin-right: 18rem;
+  }
+  
+  .fieldEmail{
+      width: 10rem;
+  }
+  
+  .buttonFormContact{
+      height: 3rem;
+      font-size: 1.3rem;
+      color: #696dfb;
+      background-color: #fff;
+      border: solid 2px #696dfb;
+      outline: none;
+      margin-top: 1rem;
+      width: 14rem;
+  }
+  .buttonFormContact:hover{
+      cursor: pointer;
+      background-color: #8488f8;
+      color: #fff;
+      transition: 800ms;
+  }
+  .container-button-form{
+      display: flex;
+      justify-content: flex-end;
+  }
+  
+  /*-----------------------------------------------------------------*/
+  /*-------------------------*MEDIA QUERIES*-------------------------*/
+  /*-----------------------------------------------------------------*/
+  
+  @media (max-width: 600px) {
+
+      .divContainerContact{
+          height: 44rem;
+      }
+      .divContainerElementsContact{
+          flex-direction: column;
+      }
+      .img-contact {
+          display: none;
+      }
+        .divCardContact {
+          width: 20rem;
+          margin-top: 1rem;
+        }
+        .boxContact{
+          width: 18rem;
+      }
+      .container-img-div-contact{
+          width: 20rem;
+          margin-right: 0;
+      }
+      .textContact {
+          font-size: 1.5rem;
+          width: 18rem;
+      } 
+      .titleTextContact{
+          font-size: 1.8rem;
+          font-weight: 600;
+          margin: 0;
+      }
+      
+      .textContact{
+          font-size: 1.1rem;
+          width: 18rem;
+      }
+      .container-button-form {
+          display: flex;
+          justify-content: space-around;
+      }
+      .buttonFormContact{
+          width: 18rem;
+      }
+  }
